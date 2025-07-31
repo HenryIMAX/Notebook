@@ -1,0 +1,75 @@
+site_name: Windchaser的笔记本
+site_url: https://henryimax.github.io/Notebook/
+repo_name: Windchaser/Note
+repo_url: https://github.com/HenryIMAX/Notebook
+copyright: 'Copyright &copy; 2025 Windchaser'
+
+markdown_extensions:
+  - abbr
+  - pymdownx.snippets
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - tables
+  - footnotes
+  - pymdownx.critic
+  - pymdownx.caret
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.tilde
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+  - attr_list
+  - md_in_html
+  - def_list
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - meta
+
+theme: 
+  name: 'material'
+  language: 'zh'
+  palette:
+    scheme: slate
+    primary: indigo
+    accent: indigo
+  font: 
+    text: Roboto
+    code: Roboto Mono
+  icon: images/logo.png
+  favicon: images/favicon.png
+  features:
+    - navigation.sections
+    - navigation.instant
+    - navigation.expand: true
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.top
+    - navigation.tracking
+    #- navigation.indexes
+    - toc.integrate
+    - content.code.copy
+    - content.code.annotate
+    - search.suggest
+    - search.highlight
+
+nav: 
+  - 主页: introduce.md 
+  - 技能拾遗: 
+    - Shell基础: Missing_Semester/Shell_basis.md
+  - 编程语言:
+    - Python:
+      - 前言: 编程语言入门/Python/前言.md
+      - 数据类型: 编程语言入门/Python/数据类型.md
+      - 容器类型: 编程语言入门/Python/容器类型.md
+  - HPC 超算短学期:
+    - HPC 计算机系统概论: HPC 101 超算短学期/计算机系统概论.md
+    - 向量化计算: HPC 101 超算短学期/向量化计算.md
