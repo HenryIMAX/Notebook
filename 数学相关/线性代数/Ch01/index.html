@@ -1,0 +1,1377 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://henryimax.github.io/Notebook/%E6%95%B0%E5%AD%A6%E7%9B%B8%E5%85%B3/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/Ch01/">
+      
+      
+        <link rel="prev" href="../../../HPC%20101%20%E8%B6%85%E7%AE%97%E7%9F%AD%E5%AD%A6%E6%9C%9F/%E5%90%91%E9%87%8F%E5%8C%96%E8%AE%A1%E7%AE%97/">
+      
+      
+      
+      <link rel="icon" href="../../../images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>Ch01 Solving Linear Equations $Ax = b$ - Windchaser的笔记本</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#chapter-1-solving-linear-equations-ax-b" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../.." title="Windchaser的笔记本" class="md-header__button md-logo" aria-label="Windchaser的笔记本" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Windchaser的笔记本
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Ch01 Solving Linear Equations $Ax = b$
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/HenryIMAX/Notebook" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Windchaser/Note
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../introduce/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  主页
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Missing_Semester/Shell_basis/" class="md-tabs__link">
+          
+  
+  
+  技能拾遗
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E5%85%A5%E9%97%A8/Python/%E5%89%8D%E8%A8%80/" class="md-tabs__link">
+          
+  
+  
+  编程语言
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../HPC%20101%20%E8%B6%85%E7%AE%97%E7%9F%AD%E5%AD%A6%E6%9C%9F/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%AE%BA/" class="md-tabs__link">
+          
+  
+  
+  HPC 超算短学期
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  
+  数学相关
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Windchaser的笔记本" class="md-nav__button md-logo" aria-label="Windchaser的笔记本" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Windchaser的笔记本
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/HenryIMAX/Notebook" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Windchaser/Note
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../introduce/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    主页
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    技能拾遗
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            技能拾遗
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Missing_Semester/Shell_basis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Shell基础
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    编程语言
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            编程语言
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Python
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            Python
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E5%85%A5%E9%97%A8/Python/%E5%89%8D%E8%A8%80/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    前言
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E5%85%A5%E9%97%A8/Python/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    数据类型
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E5%85%A5%E9%97%A8/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    容器类型
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    HPC 超算短学期
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            HPC 超算短学期
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../HPC%20101%20%E8%B6%85%E7%AE%97%E7%9F%AD%E5%AD%A6%E6%9C%9F/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%AE%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    HPC 计算机系统概论
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../HPC%20101%20%E8%B6%85%E7%AE%97%E7%9F%AD%E5%AD%A6%E6%9C%9F/%E5%90%91%E9%87%8F%E5%8C%96%E8%AE%A1%E7%AE%97/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    向量化计算
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    数学相关
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            数学相关
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5_1" id="__nav_5_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    线性代数
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5_1">
+            <span class="md-nav__icon md-icon"></span>
+            线性代数
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Ch01 Solving Linear Equations $Ax = b$
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Ch01 Solving Linear Equations $Ax = b$
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      线性方程组的几何表示
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      矩阵消元
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="矩阵消元">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      高斯消元法求解线性方程组
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      消元矩阵
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      矩阵乘法和逆
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="矩阵乘法和逆">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      矩阵乘法
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      矩阵的逆
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#alu" class="md-nav__link">
+    <span class="md-ellipsis">
+      A的LU分解
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="A的LU分解">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      矩阵的逆的性质
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alu_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      A=LU
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      转置与置换
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="转置与置换">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      置换矩阵
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      矩阵转置
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      向量空间
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="chapter-1-solving-linear-equations-ax-b">Chapter 1 Solving Linear Equations $Ax = b$</h1>
+<h2 id="_1">线性方程组的几何表示</h2>
+<p>举例：
+对线性方程组$\begin{cases} 2x-y=0\-x+2y=3\end{cases}$，用系数矩阵就可以表示为$\begin{bmatrix} 2&amp;-1 \ -1&amp;2 \end{bmatrix}\begin{bmatrix} x\y \end{bmatrix} = \begin{bmatrix} 0\3 \end{bmatrix}$，也就是$Ax=b$<strong>(dot product)</strong>的形式
+行图像(Row Picture)表示如下：</p>
+<p><img src="C:\Users\Lenovo\Desktop\Notebook\docs\数学相关\线性代数\img\1.jpg " style="zoom: 33%;"></p>
+<p>上面的线性方程组也可以表示成线性组合(Linear Conbination)的形式：
+$$
+x\begin{bmatrix}2\-1 \end{bmatrix} + y\begin{bmatrix} -1\2 \end{bmatrix} = \begin{bmatrix} 0\3 \end{bmatrix}
+$$
+列图像(Column Picture)表示如下：(求解可得$x=1,y=2$)</p>
+<p><img src="./img/2.jpg" style="zoom: 25%;"></p>
+<p>同理，对于下面的三元方程组：$\begin{cases} 2x-y=0 \ -x+2y-z=-1 \ -3y+4z=4 \end{cases}$，$A=\begin{bmatrix} 2&amp;-1&amp;0 \ -1&amp;2&amp;-1 \ 0&amp;-3&amp;4 \end{bmatrix},b=\begin{bmatrix} 0\-1\4\end{bmatrix}$
+线性组合的形式为：
+$$
+x\begin{bmatrix} 2\-1\0 \end{bmatrix} + y\begin{bmatrix} -1\2\4 \end{bmatrix} +z\begin{bmatrix} 0\-1\4 \end{bmatrix} = \begin{bmatrix} 0\-1\4 \end{bmatrix}
+$$</p>
+<div class="admonition question">
+<p class="admonition-title">思考</p>
+</div>
+<p>​   1. 对任意的$b$，是否都能求解$Ax=b$ ？</p>
+<p>​   2. 这些列的线性组合能否覆盖整个线性空间？</p>
+<p><strong>定义：</strong>若矩阵所有列向量的线性组合可以覆盖整个线性空间，则称该矩阵的列向量线性无关；若存在某一列向量可以用其他列向量线性表示，则称该矩阵的列向量线性相关</p>
+<p><strong>若$A$矩阵的列向量线性无关，则$Ax=0$当且仅当$x$是零向量</strong></p>
+<p>因此$Ax=b$可以用线性组合的方法进行计算，例如 
+$$
+\begin{bmatrix} 2&amp;5 \ 1&amp;3 \end{bmatrix} \begin{bmatrix} 1 \ 2 \end{bmatrix} = 1\begin{bmatrix} 2 \ 1 \end{bmatrix} + 2\begin{bmatrix} 5 \ 3 \end{bmatrix} = \begin{bmatrix} 12\7 \end{bmatrix}
+$$
+<strong>$Ax$的本质就是列向量的线性组合</strong>，所有列向量的线性组合称为列空间</p>
+<p>课程资源：</p>
+<p><a href="https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/resources/mit18_06scf11_ses1-1sum/">官方给出的课堂笔记</a></p>
+<p><a href="https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/resources/mit18_06scf11_ses1-1prob/">课堂作业</a></p>
+<p><a href="https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/resources/mit18_06scf11_ses1-1sol/">作业答案</a></p>
+<p><a href="https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/resources/geometry-of-linear-algebra/">习题讲解</a></p>
+<h2 id="_2">矩阵消元</h2>
+<h3 id="_3">高斯消元法求解线性方程组</h3>
+<p>求解线性方程组$\begin{cases} x+2y+z=2 \ 3x+8y+z=12 \4y+z=2 \end{cases}$，将此方程组表示成$Ax=b$的形式，则$ A=\begin{bmatrix} 1&amp;2&amp;1 \ 3&amp;8&amp;1 \ 0&amp;4&amp;1 \end{bmatrix}$，那么如何通过消元法来求解线性方程组呢？</p>
+<div class="admonition note">
+<p class="admonition-title">技巧</p>
+</div>
+<p>​   消元时一般将系数为1的优先当作主元，且主元不能为0</p>
+<p><strong>Step1：消元(Elimination)</strong>
+$$
+A \overset{R_2-3R_1}{\longrightarrow} \begin{bmatrix} 1&amp;2&amp;1 \ 0&amp;2&amp;-2 \0&amp;4&amp;1 \end{bmatrix} \overset{R_3-2R_2}{\longrightarrow} \begin{bmatrix} 1&amp;2&amp;1 \ 0&amp;2&amp;-2 \ 0&amp;0&amp;5 \end{bmatrix}(U)
+$$</p>
+<div class="admonition warning">
+<p class="admonition-title">消元失效的情况</p>
+</div>
+<p>​   如果经过消元无法得到三个主元，也就是某个主元为0，可以尝试通过行    变换使得对角线上的主元为非零元素，如果最后一行再也没有非0元素，则此方程组无解或有多个解</p>
+<p><strong>Step 2：回代(Back Substitution)</strong></p>
+<p>将$b$带入到上述消元过程，则有
+$$
+\begin{bmatrix} A&amp;b \end{bmatrix} \overset{R_2-3R_1}{\longrightarrow} \begin{bmatrix} 1&amp;2&amp;1&amp;2 \ 0&amp;2&amp;-2&amp;6 \0&amp;4&amp;1&amp;2 \end{bmatrix} \overset{R_3-2R_2}{\longrightarrow} \begin{bmatrix} 1&amp;2&amp;1&amp;2 \ 0&amp;2&amp;-2&amp;6 \ 0&amp;0&amp;5&amp;-10 \end{bmatrix}(U)
+$$
+最终得到的结果为$\begin{cases} x+2y+z=2 \ 2y-2z=6 \5z=-10 \end{cases}(Ux=c)$，解得$\begin{cases} x=2 \y=1\z=-2\end{cases}$</p>
+<h3 id="_4">消元矩阵</h3>
+<p><strong>矩阵乘法：左行右列</strong></p>
+<p><strong>左乘可以表示成行向量的线性组合，右乘可以表示成列向量的线性组合</strong></p>
+<p>例如：
+$$
+\begin{bmatrix} -&amp;-&amp;- \ -&amp;-&amp;- \-&amp;-&amp;- \end{bmatrix}\begin{bmatrix} 3\4\5 \end{bmatrix} = 3\times col1 + 4\times col2 +5\times col3
+$$</p>
+<p>$$
+\begin{bmatrix} 1&amp;2&amp;7 \end{bmatrix} \begin{bmatrix} -&amp;-&amp;- \ -&amp;-&amp;- \-&amp;-&amp;- \end{bmatrix} = 1\times row1 + 2\times row2 + 7\times row3
+$$</p>
+<p>现在要用矩阵乘法的形式表示上面的线性方程组系数矩阵的消元过程：</p>
+<p><strong>Step 1: $R_2-3R_1$</strong>
+$$
+\begin{bmatrix} 1&amp;0&amp;0 \ -3&amp;1&amp;0 \ 0&amp;0&amp;1 \end{bmatrix} \begin{bmatrix} 1&amp;2&amp;1 \ 3&amp;8&amp;1 \ 0&amp;4&amp;1 \end{bmatrix} = \begin{bmatrix} 1&amp;2&amp;1 \ 0&amp;2&amp;-2 \0&amp;4&amp;1 \end{bmatrix}
+$$
+这样我们就得到了左侧的消元矩阵，记为$E_{21}$（表示行2和行1进行了变换），我们还需要进行检验，例如要检验行2列3的元素，需要计算$\begin{bmatrix} -3&amp;1&amp;0 \end{bmatrix} \begin{bmatrix} 1\1\1 \end{bmatrix} = -2$，结果正确</p>
+<p><strong>Step 2: $R_3-2R_2$</strong>
+$$
+\begin{bmatrix} 1&amp;0&amp;0 \ 0&amp;1&amp;0 \ 0&amp;-2&amp;1 \end{bmatrix}\begin{bmatrix} 1&amp;2&amp;1 \ 0&amp;2&amp;-2 \0&amp;4&amp;1 \end{bmatrix} = \begin{bmatrix} 1&amp;2&amp;1 \ 0&amp;2&amp;-2 \ 0&amp;0&amp;5 \end{bmatrix}
+$$
+这里得到了第二个消元矩阵，记为$E_{32}$</p>
+<p>整个消元过程就是$E_{32}(E_{21}A) = U \rarr (E_{32}E_{21})A = U$（矩阵乘法的结合律）</p>
+<div class="admonition warning">
+<p class="admonition-title">注意</p>
+</div>
+<p>​   矩阵乘法没有交换律，即$AB \ne BA$</p>
+<p>课程资源：</p>
+<p><a href="https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/resources/mit18_06scf11_ses1-2sum/">官方给出的课堂笔记</a></p>
+<p><a href="https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/resources/mit18_06scf11_ses1-2prob/">课堂作业</a></p>
+<p><a href="https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/resources/mit18_06scf11_ses1-2sol/">作业答案</a></p>
+<p><a href="https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/resources/recitation-elimination-with-matrices/">习题讲解</a></p>
+<h2 id="_5">矩阵乘法和逆</h2>
+<h3 id="_6">矩阵乘法</h3>
+<p><strong>方法一(公式法)</strong>：设$A$是一个$m\times n$矩阵，$B$是一个$n\times p$矩阵，则$C=AB$是一个$m\times p$矩阵，且有
+$$
+c_{ij} = \sum_{k=1}^n{a_{ik}b_{kj}}
+$$
+<strong>方法二：</strong></p>
+<ul>
+<li>将矩阵乘法看作$A$和$B$中的$p$个列向量相乘，则$C$中的每一列都是$A$中各列的线性组合，$B$中的列向量就是线性组合的系数</li>
+<li>将矩阵乘法看作$A$的$m$个行向量和$B$相乘，则$C$中的每一行都是$B$中各行的线性组合，$A$中的行向量就是线性组合的系数</li>
+</ul>
+<p>即：设有矩阵$A,B$，如果$B = \begin{bmatrix} b_1&amp;b_2&amp;...&amp;b_p \end{bmatrix}$，则$AB = \begin{bmatrix} Ab_1&amp;Ab_2&amp;...&amp;Ab_p \end{bmatrix}$，如果$A = \begin{bmatrix} a_1\a_2\...\a_m \end{bmatrix}$，则$AB = \begin{bmatrix} a_1B \ a_2B \ ... \ a_pB \end{bmatrix}$</p>
+<p><strong>方法三：</strong>$A$的列$(m\times 1)$乘$B$的行$(1\times p)$，即
+$$
+AB = \sum A的列 \times B的行
+$$
+举个<img alt="🌰" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/svg/1f330.svg" title=":chestnut:" />：
+$$
+\begin{bmatrix} 2&amp;7 \3&amp;8 \4&amp;9 \end{bmatrix} \begin{bmatrix} 1&amp;6 \ 0&amp;0 \end{bmatrix} = \begin{bmatrix} 2\3\4 \end{bmatrix} \begin{bmatrix}1&amp;6\end{bmatrix}+\begin{bmatrix}7\8\9\end{bmatrix}\begin{bmatrix}0&amp;0\end{bmatrix}
+$$
+<strong>方法四：矩阵分块</strong>
+$$
+\underset{A}{\begin{bmatrix} A_1&amp;A_2 \A_3&amp;A_4\end{bmatrix}} + \underset{B}{\begin{bmatrix} B_1&amp;B_2 \B_3&amp;B_4\end{bmatrix}} = \underset{C}{\begin{bmatrix} A_1B_1+A_2B_3&amp;A_1B_2+A_2B_4 \A_3B_1+A_4B_3&amp;A_3B_2+A_4B_4\end{bmatrix}}
+$$</p>
+<div class="admonition tip">
+<p class="admonition-title">提示</p>
+</div>
+<p>​   分块时对应的各个分块要互相匹配(A的列数=B的行数)</p>
+<h3 id="_7">矩阵的逆</h3>
+<p><strong>重要性质：</strong>$AA^{-1} = A^{-1}A = I(单位矩阵)$，<strong>前提是矩阵的逆存在</strong></p>
+<p><strong>定义：</strong>如果一个矩阵的逆存在，则称该矩阵是可逆的，也称非奇异的；如果一个矩阵的逆不存在，则称该矩阵是不可逆的，也称奇异矩阵</p>
+<p><strong>矩阵的逆不存在的条件：</strong></p>
+<ul>
+<li>
+<p>举例：$A=\begin{bmatrix} 1&amp;3 \2&amp;6\end{bmatrix}$是一个不可逆矩阵，因为$A$乘任何矩阵得到的结果对应的列向量都是$A$中列向量的线性组合，而由于$A$中的列向量共线，且$\begin{bmatrix} 1\0\end{bmatrix}$不在这条直线上，因此不可逆</p>
+</li>
+<li>
+<p><strong>定理1：</strong>对于$n\times n$矩阵，矩阵的逆存在当且仅当消元后有$n$个主元</p>
+</li>
+<li>
+<p><strong>定理2：</strong>如果矩阵的逆存在，则逆矩阵唯一</p>
+</li>
+</ul>
+<p><strong>Proof：</strong>设$BA=I$且$AC=I$，下面证明$B=C$</p>
+<p>$B(AC) = (BA)C \Rightarrow BI=IC 或B=C$</p>
+<ul>
+<li>
+<p><strong>定理3：</strong>如果$A$是可逆的，则线性方程组$Ax=b$有且仅有唯一解，其解为$x=A^{-1}b$</p>
+</li>
+<li>
+<p><strong>定理4：</strong>若存在非零向量$x$使得$Ax=0$，则$A$的列向量线性相关，$A$不可逆(反证法：如果$A$可逆，则方程两边同时乘以$A<sup -1="-1">{-1}$，则有$x=A</sup>0 = 0$，矛盾)</p>
+</li>
+<li>
+<p><strong>定理5：</strong>一个方阵可逆当且仅当列向量线性无关</p>
+</li>
+<li>
+<p><strong>定理6：</strong>$A矩阵可逆\Leftrightarrow |A| \ne0$</p>
+</li>
+</ul>
+<p><strong>求逆矩阵(Gauss-Jordan)</strong></p>
+<p>例子：
+$$
+\underset{A}{\begin{bmatrix}1&amp;3 \2&amp;7\end{bmatrix}}\underset{A^{-1}}{\begin{bmatrix} a&amp;c \ b&amp;d\end{bmatrix}} = \underset{I}{\begin{bmatrix} 1&amp;0\0&amp;1 \end{bmatrix}} \Rightarrow \begin{cases}{\begin{bmatrix}1&amp;3 \2&amp;7\end{bmatrix}\begin{bmatrix}a\b\end{bmatrix} = \begin{bmatrix} 1\0 \end{bmatrix}} \ {\begin{bmatrix}1&amp;3 \2&amp;7\end{bmatrix}\begin{bmatrix}c\d\end{bmatrix} = \begin{bmatrix} 0\1 \end{bmatrix}}\end{cases}
+$$
+怎么同时求两个方程组呢？用增广矩阵！
+$$
+\left[
+\begin{array}{cc:cc}
+1 &amp; 3 &amp; 1 &amp; 0 \
+2 &amp; 7 &amp; 0 &amp; 1 \
+\end{array}
+\right] \rightarrow
+\left[
+\begin{array}{cc:cc}
+1 &amp; 3 &amp; 1 &amp; 0 \
+0 &amp; 1 &amp; -2 &amp; 1 \
+\end{array}
+\right] \rightarrow \left[
+\begin{array}{cc:cc}
+1 &amp; 0 &amp; 7 &amp; -3 \
+0 &amp; 1 &amp; -2 &amp; 1 \
+\end{array}
+\right]
+$$
+<strong>方法：</strong>将$A$矩阵和$I$矩阵表示成$\left[ \begin{array}{c:c} A&amp;I \end{array} \right]$的形式，通过Gauss-Jordan消元法转换成$\left[ \begin{array}{c:c} I&amp;A^{-1} \end{array} \right]$，即可求得$A^{-1}$</p>
+<h2 id="alu">A的LU分解</h2>
+<h3 id="_8">矩阵的逆的性质</h3>
+<p>$$ (1) AB的逆为B<sup -1="-1">{-1}A</sup>$$</p>
+<p>$$(2) (A<sup -1="-1">T)</sup> = (A<sup>{-1})</sup>T\quad 提示：AA^{-1} = I,对两边矩阵转置得(A<sup>{-1})</sup>TA^T = I$$</p>
+<h3 id="alu_1">A=LU</h3>
+<p>举个<img alt="🌰" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/svg/1f330.svg" title=":chestnut:" />:
+$$
+\overset{E_{21}}{\begin{bmatrix} 1&amp;0 \ -4&amp;1\end{bmatrix}}\overset{A}{\begin{bmatrix} 2&amp;1 \ 8&amp;7 \end{bmatrix}} = \overset{U}{\begin{bmatrix} 2&amp;1 \ 0&amp;3 \end{bmatrix}}(行变换)
+$$
+表示成$A = LU$的形式就是：
+$$
+\overset{A}{\begin{bmatrix} 2&amp;1 \ 8&amp;7 \end{bmatrix}} = \overset{L}{\begin{bmatrix} 1&amp;0 \ 4&amp;1\end{bmatrix}}\overset{U}{\begin{bmatrix} 2&amp;1 \ 0&amp;3 \end{bmatrix}}
+$$</p>
+<div class="admonition question">
+<p class="admonition-title">怎么求矩阵$L$($E_{21}$的逆)</p>
+</div>
+<p>​   可以把$A=LU$理解为消元过程的逆变换，以上面的$2\times 2$矩阵变换为例，消元时用的是$R_2-4R_1$，那么求$L$的时候就相当于对矩阵$U$进行逆变换使其变成$A$，也就是$R_2 + 4R_1$，即可快速求得矩阵$L$</p>
+<p>进一步分解可以得到$A=LDU$:
+$$
+\overset{A}{\begin{bmatrix} 2&amp;1 \ 8&amp;7 \end{bmatrix}} = \overset{L}{\begin{bmatrix} 1&amp;0 \ 4&amp;1\end{bmatrix}}\overset{U}{\begin{bmatrix} 2&amp;1 \ 0&amp;3 \end{bmatrix}} = \overset{L}{\begin{bmatrix} 1&amp;0 \ 4&amp;1\end{bmatrix}} \overset{D}{\begin{bmatrix} 2&amp;0 \ 0&amp;3 \end{bmatrix}} \overset{U}{\begin{bmatrix} 1&amp;1/2 \ 0&amp;1 \end{bmatrix}}
+$$</p>
+<div class="admonition tip"></div>
+<p>​   $A = LU$中的$L$指的是下三角矩阵(Lower Triangle)，$U$指的是上三角矩阵(Upper Triangle)，$D$指的是对角阵(diagonal)</p>
+<p>下面讨论一般情况：假设矩阵$A$经过一系列变换得到矩阵$U$，比如$E_{32}E_{31}E_{21}A = U(没有行互换)$，表示成$A = LU$的形式为$A = E_{21}<sup -1="-1">{-1}E_{31}</sup>U = LU$}E_{21}^{-1</p>
+<p>话说为什么要表示成$A=LU$的形式呢，直接用$A$矩阵左乘消元矩阵表示它不香吗？这是有原因的。假设对于一个$3 \times 3$矩阵，如果依次左乘消元矩阵$E_{21},E_{32}$，在这个过程中就是先让第二行与第一行进行行变换，第三行再与新的第二行进行行变换，最后的结果无法明显展示出变换过程，你也就不能快速的写出矩阵$E$，就比如下面的例子：
+$$
+E_{21} = \begin{bmatrix} 1&amp;0&amp;0 \ -2&amp;1&amp;0 \ 0&amp;0&amp;1 \end{bmatrix},E_{32} = \begin{bmatrix} 1&amp;0&amp;0 \ 0&amp;1&amp;0 \ 0&amp;-5&amp;1 \end{bmatrix},则E_{32}E_{21} = \begin{bmatrix} 1&amp;0&amp;0 \ -2&amp;1&amp;0 \10&amp;-5&amp;1 \end{bmatrix} = E
+$$
+从最后得到的矩阵可以看出，相当于将原矩阵做了$R_2-2R_1$和$R_3-5R_2+10R_1$两个行变换，不能一目了然地看出对原矩阵是如何进行行变换的，改成$A=LU$的形式就很明显了：
+$$
+E_{21}^{-1} = \begin{bmatrix} 1&amp;0&amp;0 \ 2&amp;1&amp;0 \ 0&amp;0&amp;1 \end{bmatrix},E_{32}^{-1} = \begin{bmatrix} 1&amp;0&amp;0 \ 0&amp;1&amp;0 \ 0&amp;5&amp;1 \end{bmatrix},则E_{32}<sup -1="-1">{-1}E_{21}</sup> = L
+$$
+最后的矩阵表示的是逆变换的过程，明显的可以看出原矩阵是怎么做行变换的，更重要的是你可以快速的写出$L$矩阵，只需要把行变换的乘数放进去就可以了} = \begin{bmatrix} 1&amp;0&amp;0 \ 2&amp;1&amp;0 \0&amp;5&amp;1 \end{bmatrix</p>
+<p>也就是说：<strong><img alt="📣" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/svg/1f4e3.svg" title=":mega:" />如果没有行互换，只需要将消元乘数填写到对应位置就可以得到$L$矩阵</strong></p>
+<p><strong>提问：将$n\times n$的矩阵$A$变换为矩阵$U$需要多少次操作？（注：矩阵$A$中的元素均非零，且为非奇异矩阵， 矩阵中一个元素的乘法和减法算一次操作）</strong></p>
+<p><strong>ANS：$O(N^3)$</strong></p>
+<h2 id="_9">转置与置换</h2>
+<h3 id="_10">置换矩阵</h3>
+<p>定义：<strong>置换矩阵(Permutations)</strong>，记作$P$，是用来对矩阵进行行互换和列互换的矩阵</p>
+<p>例如：交换某一矩阵的第一行和第二行
+$$
+\begin{bmatrix}0&amp;1 \ 1&amp;0 \end{bmatrix}\begin{bmatrix} a&amp;b \ c&amp;d \end{bmatrix} = \begin{bmatrix} c&amp;d \a&amp;b \end{bmatrix}
+$$
+交换某一矩阵的第一列和第二列
+$$
+\begin{bmatrix} a&amp;b \ c&amp;d \end{bmatrix}\begin{bmatrix}0&amp;1 \ 1&amp;0 \end{bmatrix} = \begin{bmatrix} b&amp;a \d&amp;c \end{bmatrix}
+$$
+<strong>注：置换矩阵是行重新排列的单位矩阵，如果对某一矩阵进行行互换，只需要左乘对应的置换矩阵即可，如果是列互换，只需要又称对应的矩阵即可</strong></p>
+<p>例如：如果$P = \begin{bmatrix} 1&amp;0&amp;0 \ 0&amp;0&amp;1 \ 0&amp;1&amp;0 \end{bmatrix}$，则$PA$就是将矩阵$A$的第二行和第三行进行互换，$AP$就是将矩阵$A$的第二列和第三列进行互换</p>
+<div class="admonition tip"></div>
+<p>​   对于$n\times n$的矩阵，共有$n!$个置换矩阵</p>
+<p>性质：</p>
+<p>$(1)P^{-1} = P^T$</p>
+<p>$(2)PP^T = I$</p>
+<p>证明：考虑$PP^T$的第$(i,j)$个元素，则有
+$$
+(PP^T)<em k_j="k,j">{i,j} =\sum<sup>n_{k=1}P_{i,k}P</sup>T</em>
+$$
+由于$P$是置换矩阵，因此每一行只有一个元素为1，其余为0：} = \sum^n_{k=1}P_{i,k}P_{j,k</p>
+<ul>
+<li>
+<p>当$i \ne j$时，由于每一列也只有一个1，所以$P_{i,k}$和$P_{j,k}$不会同时为1，故$(PP^T)_{i,j}= 0$</p>
+</li>
+<li>
+<p>当$i = j$时，则$P_{i,k}P_{i,k}$只有在$P_{i,k} = 1$时为1，其余为0，因此$(PP^T)_{i,i} = 1$</p>
+</li>
+</ul>
+<p>因此$PP^T = I$</p>
+<p>上一节提到了在没有行互换的情况下矩阵$A$可以分解成$A = LU$的形式，那么如果有行互换呢？</p>
+<p><strong>对于任何可逆矩阵$A$，其分解可以表示为$PA = LU$</strong></p>
+<h3 id="_11">矩阵转置</h3>
+<p>定义：对于一个$m\times n$矩阵$A$，它的转置$A^T$是一个$n\times m$矩阵，其中$(A^T)<em j_i="j,i">{i,j} = A</em>$</p>
+<p>性质：$(AB)^T = B<sup>TA</sup>T$</p>
+<p><strong>我们称具有$A = A^T$性质的矩阵为对称矩阵，例如$A = \begin{bmatrix} 3&amp;7&amp;1 \ 7&amp;2&amp;4 \ 1&amp;4&amp;6\end{bmatrix}$，对任意矩阵$A$，$AA^T$是一个对称矩阵</strong></p>
+<h2 id="_12">向量空间</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2025 Windchaser
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.sections", "navigation.instant", {"navigation.expand": true}, "navigation.tabs", "navigation.tabs.sticky", "navigation.top", "navigation.tracking", "toc.integrate", "content.code.copy", "content.code.annotate", "search.suggest", "search.highlight"], "search": "../../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+    
+  </body>
+</html>

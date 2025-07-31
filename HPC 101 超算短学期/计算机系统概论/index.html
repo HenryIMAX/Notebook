@@ -1,0 +1,1422 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://henryimax.github.io/Notebook/HPC%20101%20%E8%B6%85%E7%AE%97%E7%9F%AD%E5%AD%A6%E6%9C%9F/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%AE%BA/">
+      
+      
+        <link rel="prev" href="../../%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E5%85%A5%E9%97%A8/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/">
+      
+      
+        <link rel="next" href="../%E5%90%91%E9%87%8F%E5%8C%96%E8%AE%A1%E7%AE%97/">
+      
+      
+      <link rel="icon" href="../../images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>HPC 计算机系统概论 - Windchaser的笔记本</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#introduction-of-computer-system-in-hpc" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="Windchaser的笔记本" class="md-header__button md-logo" aria-label="Windchaser的笔记本" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Windchaser的笔记本
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              HPC 计算机系统概论
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/HenryIMAX/Notebook" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Windchaser/Note
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../introduce/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  主页
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Missing_Semester/Shell_basis/" class="md-tabs__link">
+          
+  
+  
+  技能拾遗
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E5%85%A5%E9%97%A8/Python/%E5%89%8D%E8%A8%80/" class="md-tabs__link">
+          
+  
+  
+  编程语言
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  
+  HPC 超算短学期
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../%E6%95%B0%E5%AD%A6%E7%9B%B8%E5%85%B3/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/Ch01/" class="md-tabs__link">
+          
+  
+  
+  数学相关
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Windchaser的笔记本" class="md-nav__button md-logo" aria-label="Windchaser的笔记本" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Windchaser的笔记本
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/HenryIMAX/Notebook" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Windchaser/Note
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../introduce/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    主页
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    技能拾遗
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            技能拾遗
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Missing_Semester/Shell_basis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Shell基础
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    编程语言
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            编程语言
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Python
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            Python
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E5%85%A5%E9%97%A8/Python/%E5%89%8D%E8%A8%80/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    前言
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E5%85%A5%E9%97%A8/Python/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    数据类型
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E5%85%A5%E9%97%A8/Python/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    容器类型
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    HPC 超算短学期
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            HPC 超算短学期
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    HPC 计算机系统概论
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    HPC 计算机系统概论
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-1-operating-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chapter 1 Operating System
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Chapter 1 Operating System">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#os-events" class="md-nav__link">
+    <span class="md-ellipsis">
+      OS Events
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#process" class="md-nav__link">
+    <span class="md-ellipsis">
+      Process 进程
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Process 进程">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#process-schedule" class="md-nav__link">
+    <span class="md-ellipsis">
+      Process Schedule 进程调度
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#process-switch" class="md-nav__link">
+    <span class="md-ellipsis">
+      Process Switch 进程切换
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inter-process-communication-ipc" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inter-Process Communication (IPC) 跨进程传输
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#thread" class="md-nav__link">
+    <span class="md-ellipsis">
+      Thread 线程
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#virtual-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      Virtual Memory
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chapter 2 计算机体系结构
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Chapter 2 计算机体系结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hpc" class="md-nav__link">
+    <span class="md-ellipsis">
+      HPC中的软件栈
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#x86-64-registers" class="md-nav__link">
+    <span class="md-ellipsis">
+      X86-64 Registers
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c" class="md-nav__link">
+    <span class="md-ellipsis">
+      在C程序中嵌入汇编语言
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      微架构
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      多核处理器
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ramrandom-access-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      RAM(Random Access Memory)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cache" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cache
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      流水线的冲突解决
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      CPU的前端和后端
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      超线程
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#simdsingle-instruction-multiple-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      SIMD(Single Instruction Multiple Data)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#multicore-and-multi-socket-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      Multicore and Multi-socket Memory
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%90%91%E9%87%8F%E5%8C%96%E8%AE%A1%E7%AE%97/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    向量化计算
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    数学相关
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            数学相关
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_1" id="__nav_5_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    线性代数
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_1">
+            <span class="md-nav__icon md-icon"></span>
+            线性代数
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E5%AD%A6%E7%9B%B8%E5%85%B3/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/Ch01/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Ch01 Solving Linear Equations $Ax = b$
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="introduction-of-computer-system-in-hpc">Introduction of Computer System in HPC</h1>
+<h2 id="chapter-1-operating-system">Chapter 1 Operating System</h2>
+<h3 id="introduction">Introduction</h3>
+<ul>
+<li><strong>CPU: 抽象模型</strong></li>
+</ul>
+<p><img src="C:\Users\Lenovo\AppData\Roaming\Typora\typora-user-images\image-20250627141544701.png" alt="image-20250627141544701" style="zoom:50%;" /></p>
+<div class="admonition note">
+<p class="admonition-title">不是所有CPU指令所用时间都相同</p>
+</div>
+<ul>
+<li><strong>Memory层级</strong></li>
+</ul>
+<p><img src="C:\Users\Lenovo\AppData\Roaming\Typora\typora-user-images\image-20250627142210998.png" alt="image-20250627142210998" style="zoom:50%;" /></p>
+<p><img alt="🌟" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/svg/1f31f.svg" title=":star2:" /><mark>Operating System is <strong>resource abstractor and resource allocator</strong></mark></p>
+<h3 id="os-events">OS Events</h3>
+<p><strong>Traps in RISC-V:</strong></p>
+<ul>
+<li>Interrupts : external asynchronous events</li>
+<li>Hardware-Generated</li>
+<li>some device controller says "something happened"</li>
+<li>Exception: Unusual condition occurring at instruction run time</li>
+<li>Software-Generated</li>
+<li>e.g. a division by zero</li>
+</ul>
+<p><strong>When a trap occurs, the control flow is switched to its handler:</strong></p>
+<p><img src="C:\Users\Lenovo\Pictures\Screenshots\屏幕截图 2025-06-27 143847.png" alt="屏幕截图 2025-06-27 143847" style="zoom:75%;" /></p>
+<p><strong>此步骤有操作系统完成</strong></p>
+<p>🤔 <strong>Q: What do we need to separate the user and kernel space?</strong></p>
+<p>😏 A: Add a <strong>Mode Bit(一个电路)</strong> to keep track of the current <strong>privilege level(特权等级)</strong></p>
+<p><strong>System calls</strong>: a special kind of trap</p>
+<blockquote>
+<p>When a user program needs to do something to do something privileged, it <strong>calls a system call</strong>.</p>
+<p><img src="C:\Users\Lenovo\AppData\Roaming\Typora\typora-user-images\image-20250627145254874.png" alt="image-20250627145254874" style="zoom: 67%;" /></p>
+<p>比如write: 把结果打印在命令行</p>
+<p>main-&gt;printf(GNU C Library)-&gt;write</p>
+<p><strong>strace命令:</strong>追踪system call的过程</p>
+</blockquote>
+<p><strong>Timers</strong>: 防止程序卡死，保证多个进程轮流执行</p>
+<h3 id="process">Process 进程</h3>
+<p><img alt="🌟" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/svg/1f31f.svg" title=":star2:" /><mark>A process is a <strong>program in execution, a unit of resource allocation and collection</strong>.</mark></p>
+<blockquote>
+<p><code>file hello</code>:查看hello文件的属性</p>
+</blockquote>
+<p><strong>ELF格式: Executable and Linkable Format</strong></p>
+<p><img src="C:\Users\Lenovo\Pictures\Screenshots\屏幕截图 2025-06-27 151506.png" alt="屏幕截图 2025-06-27 151506" style="zoom:80%;" /></p>
+<p><strong>Process Address Space:</strong></p>
+<p><img src="C:\Users\Lenovo\AppData\Roaming\Typora\typora-user-images\image-20250627152034367.png" alt="image-20250627152034367" style="zoom:80%;" /></p>
+<p><strong>Stack Frame</strong></p>
+<p>执行System call时，<strong>调用内核态时不会保存到用户栈的栈帧</strong></p>
+<p>e.g. printf调用write时，write 不会保存到用户栈的栈帧中</p>
+<p>sp fp:定位函数在栈中的栈帧范围,也可以查看函数的调用链关系</p>
+<h4 id="process-schedule">Process Schedule 进程调度</h4>
+<ul>
+<li>
+<p><strong>Non-preemptive</strong>: The process must finish its execution before the OS can schedule another process.(非抢占式，别的进程不能抢占CPU)</p>
+</li>
+<li>
+<p><strong>preemptive</strong>: The OS can interrupt a process to schedule another one.(抢占式)</p>
+</li>
+</ul>
+<p><strong>Schedule Algorithm:</strong></p>
+<ul>
+<li>Round Robin：时间片轮转，轮流跑</li>
+<li>Priority-based:基于优先级，<strong>通过<code>nice</code>指令可调高优先级</strong> </li>
+</ul>
+<p><img alt="🌟" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/svg/1f31f.svg" title=":star2:" /><mark><strong>Also decide which process to run on which core.</strong>(Controlled by <strong>Core Affinity</strong>)</mark> 绑核绑的是CPU和线程</p>
+<h4 id="process-switch">Process Switch 进程切换</h4>
+<p>切换Context的状态：进程出来时保存上下文，回去时恢复上下文</p>
+<p><strong>PCB:</strong>进程控制块，一种结构，保存了PID以及context的状态</p>
+<h3 id="inter-process-communication-ipc">Inter-Process Communication (IPC) 跨进程传输</h3>
+<p>将可以同时进行的进程放到多个CPU核心上并行，但是操作系统不会让一个进程访问另一个进程的内存，因此各个进程的数据无法累加</p>
+<p>如何实现：</p>
+<ul>
+<li><strong>Message Passing</strong>: 让一个进程向主进程发送数据用<strong>MPI</strong>收发数据，通过一个<strong>message queue</strong>进行传输</li>
+<li><strong>Shared Memory:</strong>操作系统提供一块内存，使得两个进程可以同时访问这同一块内存</li>
+<li><strong>Signal,Pipe,Socket,...</strong></li>
+</ul>
+<p><strong>Disadvantage of IPC:</strong></p>
+<p><img alt="image-20250627162006529" src="C:\Users\Lenovo\AppData\Roaming\Typora\typora-user-images\image-20250627162006529.png" /></p>
+<h3 id="thread">Thread 线程</h3>
+<p><img alt="🌟" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/svg/1f31f.svg" title=":star2:" /> A thread is a <strong>basic unit of execution </strong>within a process. Each thread has its own:</p>
+<ul>
+<li>Thread ID</li>
+<li>Program counter</li>
+<li>Register set</li>
+<li>Stack</li>
+</ul>
+<p>Shares the following with other threads within the same process:</p>
+<ul>
+<li>
+<p>Code section</p>
+</li>
+<li>
+<p>Data section</p>
+</li>
+<li>
+<p>The heap (dynamically allocated memory)</p>
+</li>
+<li>
+<p>Open files and signals</p>
+</li>
+</ul>
+<p>线程之间的地址空间、内存是相同的，因此互相之间可以共享</p>
+<p><img alt="image-20250627162553508" src="C:\Users\Lenovo\AppData\Roaming\Typora\typora-user-images\image-20250627162553508.png" /></p>
+<p>实现：OPENMP</p>
+<h3 id="virtual-memory">Virtual Memory</h3>
+<p>内存分页：4KB/Page</p>
+<p>虚拟内存：让每一个进程认为自己有无限大的地址空间（虚拟地址），操作系统需要将虚拟地址映射成物理地址</p>
+<p>进程要访问的地址就是虚拟地址，虚拟地址-&gt;OS-&gt;物理地址</p>
+<p><strong>页表</strong>：OS通过给每个进程维护不同的页表实现虚拟地址到物理地址的转换</p>
+<p><strong>TLB：</strong>缓存近期使用过的虚拟地址与物理地址的映射关系，避免每次访存都查看页表，加快速度</p>
+<p><img alt="🐱" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/svg/1f431.svg" title=":cat:" />虚拟内存是介于进程和物理内存的另一个抽象层，可以保证：</p>
+<p>• <strong>Isolation</strong>: Each process has its own address space.</p>
+<p>• <strong>Protection</strong>: Deny the process from accessing other processes’ or</p>
+<p>privileged memory.</p>
+<p>• <strong>Efficiency</strong>: Support Copy-on-Write, can run a partially loaded program.</p>
+<p>程序首先访问虚拟内存，在对应映射到物理内存，可以简化程序访问主存的复杂性，可以只加载一部分内存到程序中</p>
+<p><strong>Page：</strong>虚拟内存中的最小内存单元(4kb)</p>
+<p><strong>Frame：</strong>物理内存中的最小内存单元(4kb)</p>
+<p><strong>Memory Mapping：</strong></p>
+<ul>
+<li>数据结构：<strong>Page Table</strong></li>
+<li>硬件支持：<strong>MMU</strong>(Memory Management Unit)</li>
+<li>功能：Translate <strong>virtual page</strong> to <strong>physical frame</strong></li>
+</ul>
+<p><strong>Page Fault:</strong> 虚拟内存没有映射到物理内存上时（物理内存已满）会出现page fault，操作系统暂时会将其映射到磁盘中，然后需要时再把page从磁盘中加载到物理中，然后更新page table，这样就建立了映射关系</p>
+<p><strong>TLB</strong>：操作系统会将经常用到的映射关系</p>
+<h2 id="chapter-2">Chapter 2 计算机体系结构</h2>
+<h3 id="hpc">HPC中的软件栈</h3>
+<ul>
+<li>Application</li>
+<li>High-level I/O Library</li>
+<li>I/O Middleware</li>
+<li>I/O Forwarding</li>
+<li>Parallel File System</li>
+<li>I/O Hardware</li>
+</ul>
+<h3 id="x86-64-registers">X86-64 Registers</h3>
+<ul>
+<li>Integer registers:16个通用寄存器，每个64bits</li>
+<li>SIMD registers</li>
+</ul>
+<p><img src="C:\Users\Lenovo\AppData\Roaming\Typora\typora-user-images\image-20250628151653832.png" alt="image-20250628151653832" style="zoom: 25%;" /></p>
+<h3 id="c">在C程序中嵌入汇编语言</h3>
+<ul>
+<li>Extended ASM：</li>
+</ul>
+<p>e.g. This code copies src to dst and add 1 to dst</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kt">int</span><span class="w"> </span><span class="n">src</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">dst</span><span class="p">;</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="k">asm</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;mov %1, %0</span><span class="se">\n\t</span><span class="s">add $1, %0&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s">&quot;=r&quot;</span><span class="w"> </span><span class="p">(</span><span class="n">dst</span><span class="p">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s">&quot;r&quot;</span><span class="w"> </span><span class="p">(</span><span class="n">src</span><span class="p">));</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">dst</span><span class="p">);</span>
+</code></pre></div>
+<ul>
+<li>Compiler Instrisics</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">_mm_add_ps</span><span class="p">(),</span><span class="w"> </span><span class="n">_mm_crc32_u16</span><span class="p">(),</span><span class="w"> </span><span class="n">_mm_prefetch</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="_1">微架构</h3>
+<p>微架构是对ISA的具体实现</p>
+<h3 id="_2">多核处理器</h3>
+<p>CPU性能和CPU频率直接相关，服务器上的CPU比普通家用CPU频率要低</p>
+<p>操作系统将线程发送到CPU的硬件，CPU核心执行指令，分成四个阶段：Fetch,Decode,Execute,Commit</p>
+<p>正常执行：<img src="C:\Users\Lenovo\AppData\Roaming\Typora\typora-user-images\image-20250628152934488.png" alt="image-20250628152934488" style="zoom:50%;" /></p>
+<p><img alt="⚠" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/svg/26a0.svg" title=":warning:" /> 硬件不可避免的会浪费，而且CPI=0.25（速度太慢）</p>
+<p>Solution：流水线（Pipeline）</p>
+<p><img src="C:\Users\Lenovo\AppData\Roaming\Typora\typora-user-images\image-20250628153145131.png" alt="image-20250628153145131" style="zoom:50%;" /></p>
+<p><strong>流水线的问题</strong>：</p>
+<ul>
+<li>数据冲突：指令前后有数据依赖</li>
+<li>控制冲突：需要跳转，但跳转地址未知</li>
+<li>结构冲突：硬件资源被其他指令占用，只能等待</li>
+</ul>
+<h3 id="ramrandom-access-memory">RAM(Random Access Memory)</h3>
+<p>分类：SRAM(快)，DRAM(需要刷新)</p>
+<h3 id="cache">Cache</h3>
+<ul>
+<li>
+<p>SRAM-based</p>
+</li>
+<li>
+<p>和内存的交互时的数据大小：cacheline</p>
+</li>
+<li>
+<p>内存与缓存的映射方式：随机映射/直接映射/多路组相联</p>
+</li>
+<li>
+<p>Cache Usage：</p>
+</li>
+</ul>
+<p><img src="C:\Users\Lenovo\AppData\Roaming\Typora\typora-user-images\image-20250628160514039.png" alt="image-20250628160514039" style="zoom: 33%;" /></p>
+<ul>
+<li>利用Locality最大化利用Cache实现优化</li>
+<li>多核的Cache层次架构：</li>
+</ul>
+<p><img src="C:\Users\Lenovo\AppData\Roaming\Typora\typora-user-images\image-20250628160802245.png" alt="image-20250628160802245" style="zoom:33%;" /></p>
+<h3 id="_3">流水线的冲突解决</h3>
+<ul>
+<li>
+<p>分支预测和推测执行，尽量减少分支判断</p>
+</li>
+<li>
+<p>乱序执行：提高硬件利用率，为避免有假的数据依赖（如下），需要进行寄存器的重命名</p>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">//字母均代表寄存器</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="n">d</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">f</span>
+</code></pre></div>
+<ul>
+<li>复杂指令集转化成微码</li>
+</ul>
+<h3 id="cpu">CPU的前端和后端</h3>
+<p>前端功能：取址和译码</p>
+<p>后端功能：分配，动态调度，执行，顺序完成（指令重排序）</p>
+<p><img src="C:\Users\Lenovo\AppData\Roaming\Typora\typora-user-images\image-20250628162947303.png" alt="image-20250628162947303" style="zoom: 33%;" /></p>
+<p><img src="C:\Users\Lenovo\AppData\Roaming\Typora\typora-user-images\image-20250628163410137.png" alt="image-20250628163410137" style="zoom:33%;" /></p>
+<h3 id="_4">超线程</h3>
+<p><strong>同步多线程：</strong>多出来的线程都是超线程 </p>
+<p>e.g. 8核心16线程 </p>
+<h3 id="simdsingle-instruction-multiple-data">SIMD(Single Instruction Multiple Data)</h3>
+<p>拓宽寄存器，这样一条指令就可以将多个结果一起算出来</p>
+<p><img src="C:\Users\Lenovo\AppData\Roaming\Typora\typora-user-images\image-20250628163953183.png" alt="image-20250628163953183" style="zoom:33%;" /></p>
+<p>优点：性能提升</p>
+<p>通过mask进行SIMD，可以实现只计算其中几位</p>
+<p>SIMD支持不连续的访存</p>
+<h3 id="multicore-and-multi-socket-memory">Multicore and Multi-socket Memory</h3>
+<p>cache一致性：修改cache，需要通知其他core，其他core需要更新cache，而且通信的开销也比较大</p>
+<p>NUMA架构：非统一内存访问</p>
+<p><img src="C:\Users\Lenovo\AppData\Roaming\Typora\typora-user-images\image-20250628165351122.png" alt="image-20250628165351122" style="zoom: 50%;" /></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2025 Windchaser
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.sections", "navigation.instant", {"navigation.expand": true}, "navigation.tabs", "navigation.tabs.sticky", "navigation.top", "navigation.tracking", "toc.integrate", "content.code.copy", "content.code.annotate", "search.suggest", "search.highlight"], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+    
+  </body>
+</html>
