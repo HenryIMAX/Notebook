@@ -4,6 +4,7 @@ repo_name: Windchaser/Note
 repo_url: https://github.com/HenryIMAX/Notebook
 copyright: 'Copyright &copy; 2025 Windchaser'
 
+
 markdown_extensions:
   - abbr
   - pymdownx.snippets
@@ -73,3 +74,6 @@ nav:
   - HPC 超算短学期:
     - HPC 计算机系统概论: HPC 101 超算短学期/计算机系统概论.md
     - 向量化计算: HPC 101 超算短学期/向量化计算.md
+  - 数学相关:
+    - 线性代数: 
+      - Ch01 Solving Linear Equations $Ax = b$: 数学相关/线性代数/Ch01.md
